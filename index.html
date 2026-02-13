@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><html><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
@@ -405,39 +404,3 @@ window.addEventListener('pageLazyLoad', (function () {
 </script><script async="">var LsButton = (()=>{const e="timerStartDate",t=({uid:t,timeOnPage:n,timeOnPageUnit:r,endDate:i,delayType:s,timezone:o,buttonElement:a,localStorageEndDate:l,hideDelayedClass:c})=>{let u,d,h={startTime:null,timePassed:0};const p=()=>{const e="minutes"===r?60*+n:+n;return h.startTime+1e3*e},f=()=>("timeOnPage"===s?l?+l:p():new Date(`${i}${o.split("_")[0]}`).getTime())-(h.startTime+h.timePassed)<=0;return u=()=>{(()=>{if(f())return a.classList.remove(c),void window.removeEventListener("timerTick",u);h=Object.assign(Object.assign({},h),{timePassed:h.timePassed+=1e3})})()},d=n=>{h={timePassed:0,startTime:n.detail},"timeOnPage"!==s||l||localStorage.setItem(t,p().toString()),window.removeEventListener(e,d)},{handleTickListener:u,handleStartDateListener:d}};document.querySelectorAll("*[data-ls-button]").forEach(n=>{const r=JSON.parse(n.dataset.lsButton);if("popup-on-click"===r.action&&n.addEventListener("click",()=>{window.dispatchEvent(new CustomEvent(`openPopup-${r.popupId}`))}),["close-exit-popup","close-popup"].includes(r.action)&&n.parentElement.addEventListener("click",()=>{window.dispatchEvent(new CustomEvent(`closePopup-${r.popupId}`))}),"disabled"===r.delayType)return;const{handleStartDateListener:i,handleTickListener:s}=t(Object.assign(Object.assign({},r),{buttonElement:n,localStorageEndDate:localStorage.getItem(r.uid)}));window.addEventListener(e,i),window.addEventListener("timerTick",s)})})(); var LsTimer = (()=>{const e=864e5,t=36e5,n=6e4,r=1e3,i="timerStartDate",s={days:"0",hours:"00",minutes:"00",seconds:"00"},o=({uid:o,timeOnPage:a,endDate:l,type:c,timezone:u,hasAction:d,actionType:h,redirectUrl:p,message:f,messageClass:m,timerClass:g,localStorageEndDate:b,timerElement:y,timerItemNames:T})=>{let v,E,N={startTime:null,timePassed:0,timeState:{days:"- -",hours:"- -",minutes:"- -",seconds:"- -"}};const _=()=>a.days*e+a.hours*t+a.minutes*n+a.seconds*r+N.startTime,S=()=>("timeOnPage"===c?b?+b:_():new Date(`${l}${u.split("_")[0]}`).getTime())-(N.startTime+N.timePassed),A=()=>{let i=S();if(i<=0)return s;const o=Math.floor(i/e).toString();i%=e;const a=`0${Math.floor(i/t)}`.slice(-2);i%=t;const l=`0${Math.floor(i/n)}`.slice(-2);return i%=n,{days:o,hours:a,minutes:l,seconds:`0${Math.floor(i/r)}`.slice(-2)}},C=()=>{T.forEach(e=>{const t=y.querySelector(`#${o}-${e}`);t&&(t.querySelector(`.${g}__number span`).innerHTML=N.timeState[e])})};return v=()=>{(()=>{if(S()<=0)return N=Object.assign(N,{timeState:s}),window.removeEventListener("timerTick",v),void(d&&(()=>{if("redirectUrl"!==h){if(f){const e=`${m}__hide`;y.querySelector(`.${e}`).classList.toggle(e)}}else window.location.assign(p)})());N=Object.assign(N,{timePassed:N.timePassed+=r,timeState:A()}),C()})()},E=e=>{var t;t=e,N=Object.assign(N,{timePassed:0,startTime:t.detail}),N=Object.assign(N,{timeState:A()}),C(),"timeOnPage"!==c||b||localStorage.setItem(o,_().toString()),window.removeEventListener(i,E)},{handleTickListener:v,handleTimerStartDateListener:E}};document.querySelectorAll("div[data-ls-timer]").forEach(e=>{const t=JSON.parse(e.dataset.lsTimer),{handleTimerStartDateListener:n,handleTickListener:r}=o(Object.assign(t,{timerElement:e,localStorageEndDate:localStorage.getItem(t.uid)}));window.addEventListener(i,n),window.addEventListener("timerTick",r)})})(); var LsSection = (()=>{const e="timerStartDate",t=({uid:t,timeOnPage:n,timeOnPageUnit:r,endDate:i,delayType:s,timezone:o,sectionElement:a,localStorageEndDate:l,hideDelayedClass:c})=>{let u,d,h={startTime:null,timePassed:0};const p=()=>{const e="minutes"===r?60*+n:+n;return h.startTime+1e3*e},f=()=>("timeOnPage"===s?l?+l:p():new Date(`${i}${o.split("_")[0]}`).getTime())-(h.startTime+h.timePassed)<=0;return u=()=>{(()=>{if(f())return a.classList.remove(c),void window.removeEventListener("timerTick",u);h=Object.assign(Object.assign({},h),{timePassed:h.timePassed+=1e3})})()},d=n=>{h={timePassed:0,startTime:n.detail},"timeOnPage"!==s||l||localStorage.setItem(t,p().toString()),window.removeEventListener(e,d)},{handleTickListener:u,handleStartDateListener:d}};document.querySelectorAll("*[data-ls-section]").forEach(n=>{const r=JSON.parse(n.dataset.lsSection);if("disabled"===r.delayType)return;const{handleStartDateListener:i,handleTickListener:s}=t(Object.assign(Object.assign({},r),{sectionElement:n,localStorageEndDate:localStorage.getItem(r.uid)}));window.addEventListener(e,i),window.addEventListener("timerTick",s)})})(); var LsPage = (()=>{(()=>{let e;window.dispatchEvent(new Event("pageLoaded"));const t=()=>{var n;clearTimeout(e),n=t,window.removeEventListener("mousemove",n),window.removeEventListener("keydown",n),window.removeEventListener("touchstart",n),window.removeEventListener("click",n),window.dispatchEvent(new Event("pageLazyLoad"))};var n;n=t,window.addEventListener("mousemove",n),window.addEventListener("keydown",n),window.addEventListener("touchstart",n),window.addEventListener("click",n),e=setTimeout(()=>{t()},3e3)})()})()</script>
   </a>
 </body></html>
-
-  <header>
-    <h1>Bem-vindo ao Tausuporte</h1>
-    <p>Transforme sua experiência digital com nosso suporte especializado.</p>
-  </header>
-
-  <section>
-    <h2>O que você vai conquistar</h2>
-    <p>Nosso serviço é pensado para oferecer soluções rápidas, práticas e totalmente personalizadas para você. Confira alguns benefícios:</p>
-    <div class="benefits">
-      <div class="benefit">
-        <h3>Suporte Rápido</h3>
-        <p>Atendimento imediato para suas dúvidas e problemas.</p>
-      </div>
-      <div class="benefit">
-        <h3>Facilidade de Uso</h3>
-        <p>Ferramentas intuitivas que economizam seu tempo e esforço.</p>
-      </div>
-      <div class="benefit">
-        <h3>Resultados Comprovados</h3>
-        <p>Clientes satisfeitos com soluções eficientes e práticas.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Não perca tempo!</h2>
-    <p>Garanta agora o seu acesso e transforme sua experiência digital com nossa equipe de especialistas.</p>
-  </section>
-
-  <footer>
-    <p>&copy; 2026 Tausuporte. Todos os direitos reservados.</p>
-  </footer>
-
-</body>
-</html>
