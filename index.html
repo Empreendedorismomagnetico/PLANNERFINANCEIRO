@@ -64,7 +64,13 @@
             }
           });
         </script>
-      
+      <link rel="preload" href="https://static-media.hotmart.com/y-O0d9tHEQslawWISugVtv8FCjY=/filters:quality(1):format(webp)/klickart-prod/uploads/media/file/10374796/captura_de_tela_13-2-2026_04624_pay.hotmart.com.jpeg" as="image">
+<link rel="preload" href="https://static-media.hotmart.com/zvmR3fmRN8OP27Obbw8U3sEy3u0=/filters:quality(1):format(webp)/klickart-prod/uploads/media/file/10374798/planner_financeiro.jpg" as="image">
+<link rel="preload" href="https://static-media.hotmart.com/LNW5EKPyw_T9CWabKy6gCyF4ZZk=/filters:quality(1):format(webp)/klickart-prod/uploads/media/file/10374838/whatsapp_image_2026-02-13_at_1.05.41_am_(2).jpeg" as="image">
+<link rel="preload" href="https://static-media.hotmart.com/iwWvhqgZWKRZ8pSPasJtS22Re8I=/filters:quality(1):format(webp)/klickart-prod/uploads/media/file/10374842/whatsapp_image_2026-02-13_at_1.05.42_am.jpeg" as="image">
+<link rel="preload" href="https://static-media.hotmart.com/KsdyxtopU0-REIUPNUmpN99HXSw=/filters:quality(1):format(webp)/klickart-prod/uploads/media/file/10374839/whatsapp_image_2026-02-13_at_1.05.41_am_(1).jpeg" as="image">
+<link rel="preload" href="https://static-media.hotmart.com/wUm4hi-OegrQmy4CKHBgaC9oQvA=/filters:quality(1):format(webp)/klickart-prod/uploads/media/file/10374825/captura_de_tela_13-2-2026_05928_pay.hotmart.com.jpeg" as="image">
+<script async="">
       window.addEventListener('pageLazyLoad', function () {
         var date = new Date();
         var timezoneOffset = (date.getTimezoneOffset() / 60) * 60 * 60 * 1000;
@@ -229,9 +235,122 @@ window.addEventListener('pageLazyLoad', (function () {
 
     window.hotmartKlickartAnalyticsClickIdentifier = null;
 
-   
+    _private.CONVERSION_COUNT_ATTR = 'klickart-analytics-count-conversion';
+    _private.MAX_REQUESTS_RETRY = 5;
+    _private.retries = 0;
 
+    _private.hasRequestConfig = function () {
+      return window.hotmartKlickartAnalyticsDeliveryUrl
+        && window.hotmartKlickartAnalyticsSessionId;
+    };
 
+    _private.retryRequest = function () {
+      if (_private.retries >= _private.MAX_REQUESTS_RETRY) {
+        return;
+      }
+
+      setTimeout(_private.sendClicks, 500);
+      _private.retries += 1;
+    };
+
+    _private.clearClick = function () {
+      window.hotmartKlickartAnalyticsClickIdentifier = null;
+    };
+
+    _private.sendClicks = function () {
+      if (!_private.hasRequestConfig()) {
+        _private.retryRequest();
+        return;
+      }
+
+      var client = new XMLHttpRequest(),
+          timeElapsed = window.performance.now()/1000;
+      client.onload = _private.clearClick;
+      client.open('POST', window.hotmartKlickartAnalyticsDeliveryUrl, false);
+
+      try {
+        client.send(JSON.stringify({
+          'clickIdentifier': window.hotmartKlickartAnalyticsClickIdentifier,
+          'sessionId': window.hotmartKlickartAnalyticsSessionId,
+          'timeElapsed': timeElapsed,
+        }));
+      } catch (error) {
+        console.error('failed to publish click in analytics');
+      }
+    };
+
+    _private.incrementClick = function () {
+      _private.retries = 0;
+
+      var identifier = this.getAttribute(_private.CONVERSION_COUNT_ATTR);
+
+      window.hotmartKlickartAnalyticsClickIdentifier = identifier;
+      _private.sendClicks();
+    };
+
+    _public.init = function () {
+      var linksToCountList = document.querySelectorAll('[' + _private.CONVERSION_COUNT_ATTR + ']');
+      var linksToCount = Array.from(linksToCountList);
+
+      linksToCount.forEach(function (linkToCount) {
+        linkToCount.addEventListener('click', _private.incrementClick);
+      });
+    };
+
+    return _public;
+
+  }(window));
+
+  hotmartKlickartPublicAnalyticsClickCounter.init();
+}));
+</script><script type="text/javascript">
+window.addEventListener('pageLazyLoad', (function () {
+  var hotmartKlickartPublicAnalyticsSubscription = (function () {
+    var _public = {},
+        _private = {};
+
+    _private.MAX_REQUESTS_RETRY = 5;
+    _private.retries = 0;
+
+    _private.hasRequestConfig = function () {
+      return window.hotmartKlickartAnalyticsDeliveryUrl
+      && window.hotmartKlickartAnalyticsSessionId;
+    };
+
+    _private.retryRequest = function () {
+      if (_private.retries >= _private.MAX_REQUESTS_RETRY) {
+        return;
+      }
+
+      setTimeout(_private.sendSubscriptionEmail, 500);
+      _private.retries += 1;
+    };
+
+    _private.clearSubscription = function () {
+      window.hotmartKlickartAnalyticsSubscriptionEmail = null;
+    };
+
+    _private.sendSubscriptionEmail = function () {
+      if (!_private.hasRequestConfig()) {
+        _private.retryRequest();
+        return;
+      }
+
+      var client = new XMLHttpRequest(),
+          timeElapsed = window.performance.now()/1000;
+      client.onload = _private.clearSubscription;
+      client.open('POST', window.hotmartKlickartAnalyticsDeliveryUrl, false);
+
+      try {
+        client.send(JSON.stringify({
+          'subscriptionEmail': window.hotmartKlickartAnalyticsSubscriptionEmail || null,
+          'sessionId': window.hotmartKlickartAnalyticsSessionId,
+          'timeElapsed': timeElapsed,
+        }));
+      } catch (error) {
+        console.error('failed to publish subscription in analytics');
+      }
+    };
 
     _public.init = function () {
       var forms = document.querySelectorAll('form');
